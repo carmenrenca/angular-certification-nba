@@ -26,8 +26,11 @@ export class ResultsComponent implements OnInit {
 
   // ID param
   ID_TEAM_CODE = 'teamCode';
+  //code team
   id_team = 0;
+  //detil of team
   team$!: Observable<TeamDetail>;
+  //list of results
   results$!: Observable<Results[]>;
 
   /**

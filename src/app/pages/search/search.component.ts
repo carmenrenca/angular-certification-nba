@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TeamsService } from '../../services/teams.service';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { TeamDetail } from 'src/app/models/teams.model';
-
+import { TeamsService } from '../../services/teams.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
