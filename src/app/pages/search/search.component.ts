@@ -27,7 +27,7 @@ export class SearchComponent implements OnInit {
   /**
    * Gets all teams
    */
-  getAllTeams() {
+  getAllTeams(): void {
     this.getTeams$ = this.teamsService.getAllTeams().pipe(
       map((team) =>
         team.data.map((item) => {
@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit {
   /**
    * Determines whether submit on
    */
-  onSubmit() {
+  onSubmit(): void {
     if (this.teamSelected) {
       this.teamsService
         .getTeamById(Number(this.teamSelected))

@@ -36,7 +36,7 @@ export class CardTeamComponent implements OnInit {
   /**
    * Gets results games
    */
-  getResultsGames() {
+  getResultsGames(): void {
     this.gameService
       .getResults({
         team_ids: String(this.team.id),
@@ -63,7 +63,7 @@ export class CardTeamComponent implements OnInit {
   /**
    * Calculates marks
    */
-  calculateMarks() {
+  calculateMarks(): void {
     this.marks = {
       conceded: this.gameService.getConceded(this.games, this.team.id),
       results: this.gameService.calculateResults(this.games, this.team.id),

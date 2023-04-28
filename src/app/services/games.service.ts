@@ -17,7 +17,7 @@ export class GamesService {
     'X-RapidAPI-Host': environment.HOST,
   });
   constructor(private httpClients: HttpClient) {}
-  private DEFAULT_LAST_DAYS = 12;
+  private DEFAULT_LAST_DAYS: number = 12;
 
   /**
    * returns the information on the results of a team for a specific days
