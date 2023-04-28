@@ -59,11 +59,13 @@ export class GamesService {
    * @returns
    */
   getScored(games: Games, teamId: number): number {
-    const results = games.data.map((item) => {
-      return item.visitor_team.id === teamId
-        ? item.visitor_team_score
-        : item.home_team_score;
-    });
+    const results =
+      games &&
+      games.data.map((item) => {
+        return item.visitor_team.id === teamId
+          ? item.visitor_team_score
+          : item.home_team_score;
+      });
     return this.calculateAvg(results);
   }
 
@@ -74,11 +76,13 @@ export class GamesService {
    * @returns
    */
   getConceded(games: Games, teamId: number): number {
-    const results = games.data.map((item) => {
-      return item.visitor_team.id !== teamId
-        ? item.visitor_team_score
-        : item.home_team_score;
-    });
+    const results =
+      games &&
+      games.data.map((item) => {
+        return item.visitor_team.id !== teamId
+          ? item.visitor_team_score
+          : item.home_team_score;
+      });
     return this.calculateAvg(results);
   }
 
@@ -87,7 +91,7 @@ export class GamesService {
    * @param results list of all results
    * @returns
    */
-  calculateAvg(results: number[]) {
+  calculateAvg(results: number[] = []) {
     const poinstTotal = results.reduce((v1, v2) => {
       return v1 + v2;
     }, 0);
@@ -102,13 +106,16 @@ export class GamesService {
    * @returns returns L (loser) or V (winner)
    */
   calculateResults(games: Games, teamId: number): string[] {
-    return games.data.map((item) =>
-      (item.home_team.id === teamId &&
-        item.home_team_score > item.visitor_team_score) ||
-      (item.visitor_team.id === teamId &&
-        item.visitor_team_score > item.home_team_score)
-        ? TypesResults.WINNER
-        : TypesResults.LOSER
+    return (
+      games &&
+      games.data.map((item) =>
+        (item.home_team.id === teamId &&
+          item.home_team_score > item.visitor_team_score) ||
+        (item.visitor_team.id === teamId &&
+          item.visitor_team_score > item.home_team_score)
+          ? TypesResults.WINNER
+          : TypesResults.LOSER
+      )
     );
   }
 }

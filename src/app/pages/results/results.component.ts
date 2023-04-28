@@ -24,8 +24,8 @@ export class ResultsComponent implements OnInit {
     private gamesServ: GamesService
   ) {}
 
-  // ID param
-  ID_TEAM_CODE = 'teamCode';
+  // code param
+  CODE_PARAM = 'teamCode';
   //code team
   id_team = 0;
   //detil of team
@@ -38,9 +38,7 @@ export class ResultsComponent implements OnInit {
    */
   ngOnInit(): void {
     this.route.paramMap
-      .pipe(
-        tap((param) => (this.id_team = Number(param.get(this.ID_TEAM_CODE))))
-      )
+      .pipe(tap((param) => (this.id_team = Number(param.get(this.CODE_PARAM)))))
       .subscribe({
         next: () => {
           this.team$ = this.teamServ.getTeamById(this.id_team);
