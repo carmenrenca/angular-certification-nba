@@ -11,14 +11,14 @@
   ></app-button>
 
   <hr />
-  <div class="d-flex">
+  <div class="d-flex" *ngIf="marks">
     <section class="col-6">
       <p class="card-title">Results of past 12 days:</p>
 
-      <div *ngIf="resultScored" class="col-12" class="d-flex flex-wrap mb-3">
+      <div class="col-12" class="d-flex flex-wrap mb-3">
         <div
           class="circles text-white"
-          *ngFor="let scored of resultScored"
+          *ngFor="let scored of marks.results"
           [ngClass]="scored === 'L' ? 'bg-danger' : 'bg-success'"
         >
           {{ scored | uppercase }}
@@ -26,10 +26,10 @@
       </div>
 
       <p>
-        Avg pts scored:<strong>{{ ptsScored }}</strong>
+        Avg pts scored:<strong>{{ marks.scored }}</strong>
       </p>
       <p>
-        Avg pts conceded:<strong>{{ ptsConceded }}</strong>
+        Avg pts conceded:<strong>{{ marks.conceded }}</strong>
       </p>
     </section>
     <img class="col-6" [src]="urlImage" [alt]="team.name" />
@@ -38,7 +38,7 @@
   <app-button
     [type]="'button'"
     (click)="goToResults()"
-    [id]="''"
+    [id]="idShowResults"
     [className]="'btn btn-success'"
     [title]="'See game results >>'"
   ></app-button>

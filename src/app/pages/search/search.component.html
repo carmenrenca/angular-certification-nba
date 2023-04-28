@@ -1,12 +1,17 @@
 <form class="d-flex mt-3" (submit)="onSubmit()">
   <!------------------ FORM ---------------------->
-  <app-dropdown-autocomplete
-    class="col-3"
-    [(ngModel)]="teamSelected"
-    name="team"
+
+  <select
     [id]="ID_INPUT"
-    [listTeams$]="getTeams$"
-  ></app-dropdown-autocomplete>
+    class="col-4 mr-2 form-control"
+    [(ngModel)]="teamSelected"
+    name="teamSelected"
+    required
+  >
+    <option [value]="team.id" *ngFor="let team of getTeams$ | async">
+      {{ team.name }}
+    </option>
+  </select>
 
   <app-button
     [type]="'submit'"
@@ -18,8 +23,8 @@
 <!---------------- LIST OF CARDS ------------------>
 <section class="d-flex flex-wrap">
   <app-card-team
-    class="col-lg-4 col-md-5 m-3"
-    *ngFor="let item of listTeams | async"
+    class="col-lg-4 col-md-12 m-3"
+    *ngFor="let item of listTeams"
     [team]="item"
   ></app-card-team>
 </section>

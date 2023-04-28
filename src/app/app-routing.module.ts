@@ -10,7 +10,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'results/:id',
+    path: 'results/:teamCode',
     component: ResultsComponent,
   },
   {

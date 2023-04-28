@@ -33,7 +33,13 @@ export interface Team {
   full_name: string;
   name: string;
 }
-
+export interface Meta {
+  total_pages: number;
+  current_page: number;
+  next_page: number;
+  per_page: number;
+  total_count: number;
+}
 export enum Conference {
   East = 'East',
   West = 'West',
@@ -52,10 +58,13 @@ export enum Status {
   Final = 'Final',
 }
 
-export interface Meta {
-  total_pages: number;
-  current_page: number;
-  next_page: number;
-  per_page: number;
-  total_count: number;
+export enum TypesResults {
+  WINNER = 'V',
+  LOSER = 'L',
+}
+
+export interface Marks {
+  scored: number;
+  conceded: number;
+  results: string[];
 }

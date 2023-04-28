@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Games } from 'src/app/models/games.model';
+import { finalize } from 'rxjs';
+import { Games, Marks } from 'src/app/models/games.model';
 import { TeamDetail } from 'src/app/models/teams.model';
 import { GamesService } from 'src/app/services/games.service';
 import { TeamsService } from 'src/app/services/teams.service';
@@ -12,7 +13,13 @@ import { TeamsService } from 'src/app/services/teams.service';
 export class CardTeamComponent implements OnInit {
   @Input() team!: TeamDetail;
   #games!: Games;
-
+  #marks!: Marks;
+  /**
+   * Creates an instance of card team component.
+   * @param gameService
+   * @param teamServ
+   * @param router
+   */
   constructor(
     private gameService: GamesService,
     private teamServ: TeamsService,
@@ -34,12 +41,14 @@ export class CardTeamComponent implements OnInit {
       .getResults({
         team_ids: String(this.team.id),
       })
+      .pipe(finalize(() => this.calculateMarks()))
       .subscribe((res) => (this.games = res));
   }
   /**
    * Go to results
+   * redirect to page results/teamId
    */
-  goToResults() {
+  goToResults(): void {
     this.router.navigate([`results/${this.team.id}`]);
   }
 
@@ -47,37 +56,61 @@ export class CardTeamComponent implements OnInit {
     the card that has been selected is deleted
    * @param team
    */
-  removeCard(team: TeamDetail) {
-    this.teamServ.removeTeam(team);
+  removeCard(team: TeamDetail): void {
+    this.teamServ.removeTeam(team.id);
   }
 
-  get resultScored() {
-    return this.games
-      ? this.games.data.map((item) =>
-          item.home_team_score < item.visitor_team_score ? 'L' : 'V'
-        )
-      : [];
-  }
   /**
-   * Gets pts scored
+   * Calculates marks
    */
-  get ptsScored() {
-    return this.games && this.gameService.getScored(this.games, this.team.id);
+  calculateMarks() {
+    this.marks = {
+      conceded: this.gameService.getConceded(this.games, this.team.id),
+      results: this.gameService.calculateResults(this.games, this.team.id),
+      scored: this.gameService.getScored(this.games, this.team.id),
+    };
   }
 
-  get ptsConceded() {
-    return this.games && this.gameService.getConceded(this.games, this.team.id);
-  }
-
-  get urlImage() {
+  /**
+   * Gets url image
+   */
+  get urlImage(): string {
     return `https://interstate21.com/nba-logos/${this.team.abbreviation}.png`;
   }
-  get idButtonRemove() {
+
+  //------------------ ID BUTTONS ------------------
+  get idButtonRemove(): string {
     return `remove${this.team.abbreviation}`;
   }
-  get games() {
+  get idShowResults(): string {
+    return `results${this.team.abbreviation}`;
+  }
+  //------------------ MARKS OF RESULTS ------------------
+  /**
+   * Gets marks
+   */
+  get marks(): Marks {
+    return this.#marks;
+  }
+
+  /**
+   * Sets games
+   */
+  set marks(value: Marks) {
+    this.#marks = value;
+  }
+  //------------------ GAMES ------------------
+
+  /**
+   * Gets games
+   */
+  get games(): Games {
     return this.#games;
   }
+
+  /**
+   * Sets games
+   */
   set games(value: Games) {
     this.#games = value;
   }

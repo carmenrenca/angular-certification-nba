@@ -1,9 +1,12 @@
-<article class="card p-3 col-3 mt-3" *ngIf="this.team$ | async as team">
+<article
+  class="card p-3 col-lg-4 col-md-12 mt-3"
+  *ngIf="this.team$ | async as team"
+>
   <h2 class="card-title">{{ team.name }} [{{ team.abbreviation }}]</h2>
-  <h3 class="card-subtitle">{{ team.conference  | conference }}</h3>
+  <h3 class="card-subtitle">{{ team.conference | conference }}</h3>
 
   <hr />
-  <section class="col-6">
+  <section>
     <p class="card-title">Results of past 12 days:</p>
     <ul class="list-results" *ngIf="this.results$ | async as result">
       <li *ngFor="let data of result">

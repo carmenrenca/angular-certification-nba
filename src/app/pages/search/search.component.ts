@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamsService } from '../../services/teams.service';
-import { DropdownAutocomplete } from 'src/app/shared/components/dropdown-autocomplete/interface/dropdown-autocomplete.model';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { TeamDetail } from 'src/app/models/teams.model';
 
 @Component({
   selector: 'app-search',
@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
   ID_INPUT: string = 'teamSelect';
   ID_BUTTONS: string = 'trackBtn';
 
-  getTeams$!: Observable<DropdownAutocomplete[]>;
+  getTeams$!: Observable<TeamDetail[]>;
 
   constructor(private teamsService: TeamsService) {}
 
@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
     this.getTeams$ = this.teamsService.getAllTeams().pipe(
       map((team) =>
         team.data.map((item) => {
-          return { id: item.id, name: item.full_name } as DropdownAutocomplete;
+          return item;
         })
       )
     );
@@ -51,13 +51,23 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  get listTeams() {
-    return this.teamsService.listTeams$;
+  /**
+   * Gets list teams
+   */
+  get listTeams(): TeamDetail[] {
+    return this.teamsService.listTeams;
   }
 
-  get teamSelected() {
+  /**
+   * Gets team selected
+   */
+  get teamSelected(): string {
     return this.#teamSelected;
   }
+
+  /**
+   * Sets team selected
+   */
   set teamSelected(val: string) {
     this.#teamSelected = val;
   }

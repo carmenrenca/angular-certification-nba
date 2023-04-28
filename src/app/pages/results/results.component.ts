@@ -24,20 +24,25 @@ export class ResultsComponent implements OnInit {
     private gamesServ: GamesService
   ) {}
 
+  // ID param
+  ID_TEAM_CODE = 'teamCode';
   id_team = 0;
   team$!: Observable<TeamDetail>;
   results$!: Observable<Results[]>;
 
+  /**
+   * on init
+   */
   ngOnInit(): void {
     this.route.paramMap
-      .pipe(tap((param) => (this.id_team = Number(param.get('id')))))
+      .pipe(
+        tap((param) => (this.id_team = Number(param.get(this.ID_TEAM_CODE))))
+      )
       .subscribe({
         next: () => {
           this.team$ = this.teamServ.getTeamById(this.id_team);
           this.results$ = this.gamesServ
-            .getResults({
-              team_ids: String(this.id_team),
-            })
+            .getResults({ team_ids: String(this.id_team) })
             .pipe(map((game) => game.data));
         },
       });
