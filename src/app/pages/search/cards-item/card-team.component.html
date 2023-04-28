@@ -1,0 +1,45 @@
+<article class="card p-3 mt-3">
+  <h2 class="card-title">{{ team.full_name }} [{{ team.abbreviation }}]</h2>
+  <h3 class="card-subtitle">{{ team.conference | conference }}</h3>
+  <app-button
+    (click)="removeCard(team)"
+    [type]="'button'"
+    [title]="'X'"
+    [className]="'btn'"
+    class="btn-close"
+    [id]="idButtonRemove"
+  ></app-button>
+
+  <hr />
+  <div class="d-flex">
+    <section class="col-6">
+      <p class="card-title">Results of past 12 days:</p>
+
+      <div *ngIf="resultScored" class="col-12" class="d-flex flex-wrap mb-3">
+        <div
+          class="circles text-white"
+          *ngFor="let scored of resultScored"
+          [ngClass]="scored === 'L' ? 'bg-danger' : 'bg-success'"
+        >
+          {{ scored | uppercase }}
+        </div>
+      </div>
+
+      <p>
+        Avg pts scored:<strong>{{ ptsScored }}</strong>
+      </p>
+      <p>
+        Avg pts conceded:<strong>{{ ptsConceded }}</strong>
+      </p>
+    </section>
+    <img class="col-6" [src]="urlImage" [alt]="team.name" />
+  </div>
+
+  <app-button
+    [type]="'button'"
+    (click)="goToResults()"
+    [id]="''"
+    [className]="'btn btn-success'"
+    [title]="'See game results >>'"
+  ></app-button>
+</article>

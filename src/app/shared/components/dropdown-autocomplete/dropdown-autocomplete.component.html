@@ -1,0 +1,11 @@
+<select
+  class="form-control"
+  [id]="id"
+  required
+  (change)="onChange(teamSelect.value)"
+  #teamSelect
+>
+  <option [value]="team.id" *ngFor="let team of listTeams$ | async">
+    {{ team.name }}
+  </option>
+</select>

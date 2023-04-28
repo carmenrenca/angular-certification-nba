@@ -1,0 +1,25 @@
+<article class="card p-3 col-3 mt-3" *ngIf="this.team$ | async as team">
+  <h2 class="card-title">{{ team.name }} [{{ team.abbreviation }}]</h2>
+  <h3 class="card-subtitle">{{ team.conference  | conference }}</h3>
+
+  <hr />
+  <section class="col-6">
+    <p class="card-title">Results of past 12 days:</p>
+    <ul class="list-results" *ngIf="this.results$ | async as result">
+      <li *ngFor="let data of result">
+        <strong> {{ data.home_team.abbreviation }}</strong>
+        {{ data.home_team_score }} -
+        {{ data.visitor_team_score }}
+        <strong> {{ data.visitor_team.abbreviation }}</strong>
+      </li>
+    </ul>
+  </section>
+
+  <app-button
+    routerLink=""
+    [type]="'button'"
+    [id]="'backBtn'"
+    [className]="'btn btn-success'"
+    [title]="'<< Back to all team stats'"
+  ></app-button>
+</article>

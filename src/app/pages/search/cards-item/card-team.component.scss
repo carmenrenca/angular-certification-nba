@@ -1,0 +1,17 @@
+.circles {
+  border-radius: 100%;
+  width: 34px;
+  margin: 2px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card {
+  position: relative;
+}
+.btn-close {
+  position: absolute;
+  top: 0px;
+  right: 4px;
+}

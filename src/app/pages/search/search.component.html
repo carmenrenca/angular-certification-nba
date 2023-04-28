@@ -1,0 +1,25 @@
+<form class="d-flex mt-3" (submit)="onSubmit()">
+  <!------------------ FORM ---------------------->
+  <app-dropdown-autocomplete
+    class="col-3"
+    [(ngModel)]="teamSelected"
+    name="team"
+    [id]="ID_INPUT"
+    [listTeams$]="getTeams$"
+  ></app-dropdown-autocomplete>
+
+  <app-button
+    [type]="'submit'"
+    [id]="ID_BUTTONS"
+    [className]="'btn btn-primary'"
+    [title]="'Track team'"
+  ></app-button>
+</form>
+<!---------------- LIST OF CARDS ------------------>
+<section class="d-flex flex-wrap">
+  <app-card-team
+    class="col-lg-4 col-md-5 m-3"
+    *ngFor="let item of listTeams | async"
+    [team]="item"
+  ></app-card-team>
+</section>
